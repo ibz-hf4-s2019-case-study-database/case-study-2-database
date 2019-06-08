@@ -1,5 +1,10 @@
 {
+    "name": "example",
+    "description": "example project",
     "require": {
         "monolog/monolog": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {"": "web/Classes/"}
     }
 }
