@@ -188,7 +188,7 @@ class Dispatcher {
 
             $object = new $classname;
             if ($data) {
-                // TODO: Add function for data
+                $object->setData($data);
             }
             
             $html = $object->$action();

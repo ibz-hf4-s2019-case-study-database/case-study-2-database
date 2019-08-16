@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: ['./src/index.js', './src/index.scss'],
+    entry: ['./src/build.js', './src/build.scss'],
     output: {
         filename: 'main.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, '../web/Assets')
     },
     module: {
         rules: [

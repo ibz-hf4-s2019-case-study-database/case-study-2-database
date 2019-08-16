@@ -1,0 +1,12 @@
+require('./javascript/alert');
+require('./javascript/button');
+require('./javascript/carousel');
+require('./javascript/collapse');
+require('./javascript/dropdown');
+require('./javascript/index');
+require('./javascript/modal');
+require('./javascript/popover');
+require('./javascript/scrollspy');
+require('./javascript/tab');
+require('./javascript/tooltip');
+require('./javascript/util');

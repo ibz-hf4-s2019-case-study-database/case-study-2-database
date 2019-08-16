@@ -1,6 +1,8 @@
 <?php
-use MarkusGehrig\Diary\Bootstrap\Bootstrap;
-// Copyright (c) 2018 Markus Gehrig
+
+namespace MarkusGehrig\Bootstrap;
+
+// Copyright (c) 2019 Markus Gehrig
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +21,27 @@ use MarkusGehrig\Diary\Bootstrap\Bootstrap;
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-// Load the composer autoloader.
-include_once __DIR__.'/../vendor/autoload.php';
-// Create the Bootstrap Class (Entrie Point)
-$bootstrap = new Bootstrap();
-$bootstrap->boot();
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use MarkusGehrig\Core\Dispatcher\Dispatcher;
+
+class Bootstrap {
+    public function __construct()
+    {
+        // Get IO classes for request and responde
+        $GLOBALS['request']         = Request::createFromGlobals();
+        $GLOBALS['response']        = new Response();
+
+        // Get dispatcher
+        $GLOBALS['dispatcher']      = new Dispatcher($GLOBALS['request']);
+
+        return $this;
+    }
+
+    public function boot() 
+    {
+        $GLOBALS['dispatcher']->dispatch();
+    }
+}

@@ -25,12 +25,15 @@ namespace MarkusGehrig\Core\Controller;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
 
-class AbstractController {
+abstract class AbstractController {
     /** @var array $data */
     protected $data = [];
 
     /** @var array $templateDirs */
     protected $templateDirs = [];
+
+    /** @var array $templateDirs */
+    protected $needAuthentication = true;
 
     public function __construct()
     {
@@ -93,7 +96,8 @@ class AbstractController {
     }
 
     /**
-     * 
+     * @param array $parameter
+     * @return string
      */
     public function render($parameter = null) {
         $loader = new Twig_Loader_Filesystem($this->templateDirs);
@@ -103,5 +107,27 @@ class AbstractController {
 
         $template = $this->twig->load($file);
         return $template->render((array) $parameter);
+    }
+
+    /**
+     * Get the value of needAuthentication
+     * 
+     * @return boolean
+     */ 
+    public function getNeedAuthentication()
+    {
+        return $this->needAuthentication;
+    }
+
+    /**
+     * Set the value of needAuthentication
+     *
+     * @return  self
+     */ 
+    public function setNeedAuthentication($needAuthentication)
+    {
+        $this->needAuthentication = $needAuthentication;
+
+        return $this;
     }
 }
