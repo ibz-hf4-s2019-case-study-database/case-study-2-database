@@ -1,5 +1,5 @@
 <?php
-use MarkusGehrig\Diary\Bootstrap\Bootstrap;
+use MarkusGehrig\Bootstrap\Bootstrap;
 // Copyright (c) 2018 Markus Gehrig
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,7 +20,11 @@ use MarkusGehrig\Diary\Bootstrap\Bootstrap;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 // Load the composer autoloader.
+
 include_once __DIR__.'/../vendor/autoload.php';
-// Create the Bootstrap Class (Entrie Point)
+
+// Create the Bootstrap Class (Entry Point)
 $bootstrap = new Bootstrap();
-$bootstrap->boot();
+$response = $bootstrap->boot();
+
+$response->send();

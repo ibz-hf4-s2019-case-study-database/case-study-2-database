@@ -22,6 +22,8 @@ namespace MarkusGehrig\Core\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
 
@@ -37,6 +39,9 @@ abstract class AbstractController {
 
     public function __construct()
     {
+        $this->addTemplateDir("Core/Template/Layouts");
+        $this->addTemplateDir("Core/Template/Templates");
+        $this->addTemplateDir("Core/Template/Partials");
     }
 
     /**
@@ -99,8 +104,8 @@ abstract class AbstractController {
      * @param array $parameter
      * @return string
      */
-    public function render($parameter = null) {
-        $loader = new Twig_Loader_Filesystem($this->templateDirs);
+    public function render($file, $parameter = null) {
+        $loader = new Twig_Loader_Filesystem(array_reverse($this->templateDirs));
         $this->twig = new Twig_Environment($loader, array(
             'cache' => false,
         ));

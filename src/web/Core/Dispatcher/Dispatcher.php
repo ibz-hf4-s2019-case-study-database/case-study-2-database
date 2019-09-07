@@ -44,6 +44,7 @@ class Dispatcher {
     
     public function __construct(Request $request)
     {
+        $this->request = $request;
     }
 
     /**
@@ -168,38 +169,29 @@ class Dispatcher {
      * @param array $data
      */
     public function dispatch($module = null, $controller = null, $action = null, $data = null) {
-        $module =           ($module ? $module : $this->request->query->get('controller', 'dashboard'));
-        $dashboard =        ($dashboard ? $dashboard : $this->request->query->get('dashboard', 'dashboard'));
-        $action =           ($action ? $action : $this->request->query->get('action', 'show'));
+        $module =           ($module ? $module : $this->request->query->get('module', 'dashboard'));
+        $controller =       ($controller ? $controller : $this->request->query->get('controller', 'dashboard'));
+        $action =           ($action ? $action : $this->request->query->get('action', 'show')) . 'Action';
         $data =             ($data ? $data : $this->request->query->get('data', null));
 
         $this->module =     ucfirst($module);
         $this->controller = ucfirst($controller);
-        $this->action =     $action . 'Action';
+        $this->action =     $action ;
         $this->data =       $data;
 
         $className = 'MarkusGehrig\\' . $this->module . '\\Controller\\' . $this->controller . 'Controller';
-        $html = '';
 
-        try {
-            if(!class_exists($classname)) {
-                throw new Exception('Class doesn\'t exist.');
-            }
+        if(!class_exists($className)) {
+            throw new Exception('Class doesn\'t exist.');
+        }
 
-            $object = new $classname;
-            if ($data) {
-                $object->setData($data);
-            }
-            
-            $html = $object->$action();
+        $object = new $className;
+        if ($data) {
+            $object->setData($data);
         }
-        catch(Exception $e) {
-
-        }
-        finally {
-            $response = new Response($html);
-            return $response;
-        }
+        
+        return $object->$action();
+        
     }
 
     /**

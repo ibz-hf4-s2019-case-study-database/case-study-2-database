@@ -42,6 +42,6 @@ class Bootstrap {
 
     public function boot() 
     {
-        $GLOBALS['dispatcher']->dispatch();
+        return $GLOBALS['dispatcher']->dispatch();
     }
 }

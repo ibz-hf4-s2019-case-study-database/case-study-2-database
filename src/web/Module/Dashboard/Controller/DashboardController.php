@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkusGehrig\Core\Controller;
+namespace MarkusGehrig\Dashboard\Controller;
 
 // Copyright (c) 2019 Markus Gehrig
 //
@@ -22,6 +22,8 @@ namespace MarkusGehrig\Core\Controller;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use MarkusGehrig\Core\Controller\AbstractController;
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
@@ -29,9 +31,12 @@ use \Twig_Environment;
 class DashboardController extends AbstractController {
     public function __construct()
     {
+        parent::__construct();
     }
 
     public function showAction() {
-        $this->render();
+        $response = new Response();
+        $response->setContent($this->render("backend.html.twig"));
+        return $response;
     }
 }

@@ -26,6 +26,24 @@ module.exports = {
                     },
                     {
                         loader: 'sass-loader'
+                    }                 
+                ]
+            },
+            {
+                test: /\.m?js$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                ['@babel/preset-env', {
+                                    "targets": {
+                                        "browsers": ["last 2 versions", "ie >= 10"]
+                                    }
+                                }
+                                ]
+                            ],
+                        },
                     }
                 ]
             }
