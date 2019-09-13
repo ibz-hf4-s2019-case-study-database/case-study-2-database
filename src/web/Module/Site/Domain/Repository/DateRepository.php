@@ -2,7 +2,7 @@
 
 namespace MarkusGehrig\Site\Domain\Repository;
 
-class CityRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractRepository {
+class DateRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractRepository {
     public function __construct() {
         parent::__construct();
     }
@@ -12,13 +12,13 @@ class CityRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractReposi
 
         $return = [];
         $result = $queryBuilder
-            ->select('uid', 'name', 'zip', 'address')
-            ->from('city')
+            ->select('uid', '"date"', '"cityId"')
+            ->from('"date"')
             ->execute()
             ->fetchAll();
 
         foreach ($result as $value) {
-            $return[] = $this->dynamicModelCreate($value, '\MarkusGehrig\Site\Domain\Model\CityModel');
+            $return[] = $this->dynamicModelCreate($value, '\MarkusGehrig\Site\Domain\Model\DateModel');
         }
 
         return $return;
@@ -28,29 +28,28 @@ class CityRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractReposi
         $queryBuilder = $this->conn->createQueryBuilder();
 
         $result = $queryBuilder
-            ->select('uid', 'name', 'zip', 'address')
-            ->from('city')
+            ->select('uid', 'date', 'cityid')
+            ->from('date')
             ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid)))
             ->execute()
             ->fetch();
 
         
-        return $this->dynamicModelCreate($result, '\MarkusGehrig\Site\Domain\Model\CityModel');  
+        return $this->dynamicModelCreate($result, '\MarkusGehrig\Site\Domain\Model\DateModel');  
     }
 
     public function createModel($data) {
-        return $this->dynamicModelCreate($data, '\MarkusGehrig\Site\Domain\Model\CityModel');
+        return $this->dynamicModelCreate($data, '\MarkusGehrig\Site\Domain\Model\DateModel');
     }
 
-    public function insertRecord(\MarkusGehrig\Site\Domain\Model\CityModel $city) {
+    public function insertRecord(\MarkusGehrig\Site\Domain\Model\DateModel $Date) {
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder
-            ->insert('city')
+            ->insert('"date"')
             ->values(
                 array(
-                    'name' => $queryBuilder->createNamedParameter($city->getName()),
-                    'zip' => $queryBuilder->createNamedParameter($city->getZip()),
-                    'address' => $queryBuilder->createNamedParameter($city->getAddress())
+                    '"date"' => $queryBuilder->createNamedParameter($Date->getDate()),
+                    '"cityId"' => $queryBuilder->createNamedParameter($Date->getCityId()),
                 )
             )
             ->execute();

@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     $('.ajax-dates').click(function() {
         $(this).addClass('active');
-        alert('dates');
+        loadDates();
     });
 
     $('.ajax-places').click(function() {
@@ -26,13 +26,21 @@ $(document).ready(function() {
     });
 
     function loadDates() {
-        jQuery.ajax('').done(function() {
+        $.getJSON('index.php?module=site&controller=site&action=date&data[cityId]=' + siteConfig.cityId).done(function(data) {
+            console.log(data);
+            var newbuttonlink = "index.php?module=site&controller=site&action=newDate&data[cityId]=" + siteConfig.cityId;
+            var newbutton = "<a href=" + newbuttonlink + ">Neuer Termin</a>";
 
+            var tablehtml= '';
+            $('.ajax-content').html(newbutton + tablehtml);
         });
     }
 
-    function loadPlaces() {   
-        $.getJSON('index.php?module=site&controller=site&action=place', function(data) {
+    function loadPlaces() { 
+        //console.log(siteConfig.cityId);  
+        $.getJSON('index.php?module=site&controller=site&action=place&data[cityId]=' + siteConfig.cityId, function(data) {
+            var newbuttonlink = "index.php?module=site&controller=site&action=newPlace&data[cityId]=" + siteConfig.cityId;
+            var newbutton = "<a href=" + newbuttonlink + ">Neuer Markstand</a>";
             var tablehtml = "<table class='table table-striped table-dark'>";
             
             tablehtml += "<thead class='thead-dark'>";
@@ -52,7 +60,7 @@ $(document).ready(function() {
             });
             tablehtml += "</tbody></table>";
 
-            $('.ajax-content').html(tablehtml);
+            $('.ajax-content').html(newbutton + tablehtml);
         });
     }
 

@@ -12,11 +12,18 @@
                 <form method="GET" action="index.php">
                     <input type="hidden" name="module" value="site">
                     <input type="hidden" name="controller" value="site">
-                    <input type="hidden" name="action" value="createDate">
-                    <input type="hidden" name="data[cityId]" value="{{ cityId }}">
+                    <input type="hidden" name="action" value="createCity">
                     <div class="form-group">
-                        <label>Datum</label>
-                        <input name="data[date]" class="form-control" type="date">
+                        <label>Name</label>
+                        <input name="data[name]" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse</label>
+                        <input name="data[address]" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Plz</label>
+                        <input name="data[zip]" class="form-control" type="text">
                     </div>
                     <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
                 </form>

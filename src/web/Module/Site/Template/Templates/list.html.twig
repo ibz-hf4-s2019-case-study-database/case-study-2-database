@@ -14,17 +14,21 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Standort</th>
+                            <th scope="col">Plz</th>
+                            <th scope="col">Strasse</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Aarau</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Baden</td>
-                        </tr>
+                        
+                        {% for city in cities %}  
+                            <tr>
+                                <th>{{ city.uid|e }}</th>
+                                <td><a href="index.php?module=site&controller=site&action=show&data[cityUid]={{ city.uid|e }}">{{ city.name|e }}<a></td>
+                                <td>{{ city.zip|e }}</td>
+                                <td>{{ city.address|e }}</td>
+                            </tr>                   
+                        {% endfor %}
+                        
                     </tbody>
                 </table>
             </div>

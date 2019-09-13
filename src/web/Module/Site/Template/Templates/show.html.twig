@@ -2,19 +2,24 @@
 
 {% block head %}
     {{ parent() }}
-    <title>Standort Baden</title>
+    <title>Standort {{ city.name|e }}</title>
+    <script type="text/javascript">
+        var siteConfig = {
+            cityId: {{ cityId }}
+        };
+    </script>
 {% endblock %}
 {% block content %}
     <section class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Standort Baden</h1>
+                <h1>Standort {{ city.name|e }}</h1>
             </div>
             <div class="col-4">
                 <div class="btn-group-vertical">
-                    <button type="button" class="btn btn-outline-dark ajax-button ajax-dates">Termine</button>
-                    <button type="button" class="btn btn-outline-dark ajax-button ajax-places">Marktstände</button>
-                    <button type="button" class="btn btn-outline-dark ajax-button ajax-reservations">Reservationen</button>
+                    <button type="button" data-cityUid="{{ city.uid|e }}" class="btn btn-outline-dark ajax-button ajax-dates">Termine</button>
+                    <button type="button" data-cityUid="{{ city.uid|e }}" class="btn btn-outline-dark ajax-button ajax-places">Marktstände</button>
+                    <button type="button" data-cityUid="{{ city.uid|e }}" class="btn btn-outline-dark ajax-button ajax-reservations">Reservationen</button>
                 </div>
             </div>
             <div class="col-8 ajax-content">

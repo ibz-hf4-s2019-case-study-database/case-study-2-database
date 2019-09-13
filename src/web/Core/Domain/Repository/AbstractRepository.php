@@ -15,8 +15,6 @@ class AbstractRepository {
             'driver' => 'pdo_pgsql',
         );
         $this->conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
-
-        var_dump($this->conn->connect());
     }
 
     protected function dynamicModelCreate($data, $modelname) {

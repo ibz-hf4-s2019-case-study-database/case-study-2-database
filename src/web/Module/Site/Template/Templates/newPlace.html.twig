@@ -8,16 +8,20 @@
     <section class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Neuer Standort</h1>
+                <h1>Neuen Markstand</h1>
                 <form>
-                    <form>
+                    <form action="index.php">
+                        <input type="hidden" name="module" value="site">
+                        <input type="hidden" name="controller" value="site">
+                        <input type="hidden" name="action" value="createPlace">
+                        <input type="hidden" name="data[cityId]" value="{{ cityId }}">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input class="form-control" type="text">
+                            <label>Länge</label>
+                            <input name="data[length]" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
-                            <input class="form-control" type="text">
+                            <label>Breite</label>
+                            <input name="data[width]" class="form-control" type="text">
                         </div>
                         <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
                     </form>
@@ -26,3 +30,4 @@
         </div>
     </section>
 {% endblock %}
+

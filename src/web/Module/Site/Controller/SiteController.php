@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use MarkusGehrig\Core\Controller\AbstractController;
 use MarkusGehrig\Site\Domain\Repository\SiteRepository;
 use MarkusGehrig\Site\Domain\Repository\CityRepository;
+use MarkusGehrig\Site\Domain\Repository\DateRepository;
 
 use \Twig_Loader_Filesystem;
 use \Twig_Environment;
@@ -36,6 +37,7 @@ class SiteController extends AbstractController {
 
     private $siteRepository;
     private $cityRepository;
+    private $dateRepository;
 
     public function __construct()
     {
@@ -45,11 +47,13 @@ class SiteController extends AbstractController {
 
         $this->siteRepository = new SiteRepository();
         $this->cityRepository = new CityRepository();
+        $this->dateRepository = new DateRepository();
     }
 
     public function showAction() {
+        $city = $this->cityRepository->findByUid($this->data['cityUid']);
         $response = new Response();
-        $response->setContent($this->render("show.html.twig"));
+        $response->setContent($this->render("show.html.twig", array('city' => $city, 'cityId' => $this->data['cityUid'])));
         return $response;
     }
 
@@ -58,13 +62,12 @@ class SiteController extends AbstractController {
 
         $city = $this->cityRepository->findAll();
 
-        var_dump($city);
-
-        $response->setContent($this->render("list.html.twig"));
+        $response->setContent($this->render("list.html.twig", array('cities' => $city)));
         return $response;
     }
 
     public function reservationAction() {
+        $cityId = $this->data['cityId'];
         $return = [
             '12.08.2019' => [
                 '1' => [
@@ -108,20 +111,27 @@ class SiteController extends AbstractController {
     }
 
     public function placeAction() {
-        $return = [
-            '1' => [
-                "width" => "10m",
-                "length" => "5m"
-            ],
-            '2' => [
-                "width" => "5m",
-                "length" => "10m"
-            ],
-            '3' => [
-                "width" => "10m",
-                "length" => "5m"
-            ]
-        ];
+        
+        $cityId = $this->data['cityId'];
+        $data = $this->siteRepository->findByCityId($cityId);
+
+        $return = [];
+        foreach ($data as $site) {
+            $return[$site->getUid()]['width'] = $site->getWidth();
+            $return[$site->getUid()]['length'] = $site->getLength();
+        }
+
+        return JsonResponse::fromJsonString(json_encode($return));
+    }
+
+    public function dateAction() {
+        $cityId = $this->data['cityId'];
+        $dates = $this->dateRepository->findAll();
+
+        $return['cityId'] = $cityId;
+        foreach ($dates as $date) {
+            $return['dates'][$date->getUid()]['date'] = $date->getDate();
+        }
 
         return JsonResponse::fromJsonString(json_encode($return));
     }
@@ -142,15 +152,37 @@ class SiteController extends AbstractController {
         return $response;
     }
 
-    public function newPlaceAction() {
+    public function newCityAction() {
         $response = new Response();
-        $response->setContent($this->render("newPlace.html.twig"));
+        $response->setContent($this->render("newCity.html.twig"));
         return $response;
+    }
+
+    public function createCityAction() {
+        $this->cityRepository->insertRecord($this->cityRepository->createModel($this->getData()));
+        return $this->listAction();
     }
 
     public function newDateAction() {
         $response = new Response();
-        $response->setContent($this->render("newDate.html.twig"));
+        $response->setContent($this->render("newDate.html.twig", array("cityId" => $this->data['cityId'])));
         return $response;
+    }
+
+    public function createDateAction() {;
+        $this->dateRepository->insertRecord($this->dateRepository->createModel($this->data));
+        return $this->showAction();
+    }
+
+    public function newPlaceAction() {
+        $response = new Response();
+        $response->setContent($this->render("newPlace.html.twig", array("cityId" => $this->data['cityId'])));
+        return $response;
+    }
+
+    public function createPlaceAction() {
+        $this->siteRepository->insertRecord($this->siteRepository->createModel($this->data));
+        $this->data['cityUid'] = $this->data['cityId'];
+        return $this->showAction();
     }
 }
