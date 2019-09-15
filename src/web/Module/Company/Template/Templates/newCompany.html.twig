@@ -1,0 +1,29 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Neue Firma</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Neue Firma</h1>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="module" value="company">
+                    <input type="hidden" name="controller" value="company">
+                    <input type="hidden" name="action" value="createCompany">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="data[name]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input name="data[telephone]" class="form-control" type="input">
+                    </div>
+                    <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

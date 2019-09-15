@@ -1,0 +1,36 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Firmen</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Firmen</h1>
+                <a href="index.php?module=company&controller=company&action=newCompany">Neue Firma</a>
+                <table class="table table-striped table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Telefon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for company in companies %}  
+                            <tr>
+                                <th>{{ company.uid|e }}</th>
+                                <td>{{ company.name|e }}</td>
+                                <td>{{ company.telephone|e }}</td>
+                            </tr>                   
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

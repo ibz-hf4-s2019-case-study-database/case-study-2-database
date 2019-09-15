@@ -1,0 +1,57 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Neuer Benutzer</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Neuer Benutzer</h1>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="module" value="user">
+                    <input type="hidden" name="controller" value="user">
+                    <input type="hidden" name="action" value="createUser">
+                    <div class="form-group">
+                        <label>Firma</label>
+                        <select name="data[companyId]" class="form-control">
+                            {% for company in companies %} 
+                                <option value="{{ company.uid|e }}">{{ company.name|e }}</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Funktion</label>
+                        <input name="data[function]" class="form-control" type="input">
+                    </div> 
+                    <div class="form-group">
+                        <label>Vorname</label>
+                        <input name="data[firstname]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname</label>
+                        <input name="data[lastname]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Strasse</label>
+                        <input name="data[street]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Plz</label>
+                        <input name="data[zip]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Ort</label>
+                        <input name="data[place]" class="form-control" type="input">
+                    </div>                   
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input name="data[telephone]" class="form-control" type="input">
+                    </div>
+                    <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

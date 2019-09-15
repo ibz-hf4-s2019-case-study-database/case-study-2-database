@@ -1,0 +1,42 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Benutzer</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Benutzer</h1>
+                <a href="index.php?module=user&controller=user&action=newUser">Neuer User</a>
+                <table class="table table-striped table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Vorname</th>
+                            <th scope="col">Nachname</th>
+                            <th scope="col">Strasse</th>
+                            <th scope="col">Plz</th>
+                            <th scope="col">Stadt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for user in users %}  
+                            <tr>
+                                <th>{{ user.uid|e }}</th>
+                                <td>{{ user.firstname|e }}</td>
+                                <td>{{ user.lastname|e }}</td>
+                                <td>{{ user.street|e }}</td>
+                                <td>{{ user.zip|e }}</td>
+                                <td>{{ user.place|e }}</td>
+                            </tr>                   
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}
