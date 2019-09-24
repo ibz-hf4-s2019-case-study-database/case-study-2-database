@@ -1,0 +1,49 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Neue Reservation</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Neue Reservation</h1>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="module" value="reservation">
+                    <input type="hidden" name="controller" value="reservation">
+                    <input type="hidden" name="action" value="createReservation">
+                    <div class="form-group">
+                        <label>Firma</label>
+                        <select name="data[companyId]" class="form-control">
+                            {% for company in companies %} 
+                                <option value="{{ company.uid|e }}">{{ company.name|e }}</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stadt</label>
+                        <select id="reservation-city-select" name="data[cityId]" class="form-control">
+                            {% for city in cities %} 
+                                <option value="{{ city.uid|e }}">{{ city.name|e }}</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Datum</label>
+                        <select id="reservation-date-select" name="data[dateId]" class="form-control">
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stand</label>
+                        <select id="reservation-site-select" name="data[siteId]" class="form-control">
+                            
+                        </select>
+                    </div>     
+                    <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

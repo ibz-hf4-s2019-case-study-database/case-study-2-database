@@ -1,0 +1,45 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Neue Firma</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Neue Firma</h1>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="module" value="abo">
+                    <input type="hidden" name="controller" value="abo">
+                    <input type="hidden" name="action" value="createOffer">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="data[title]" class="form-control" type="input">
+                    </div>
+                    <div class="form-group">
+                        <label>Preis</label>
+                        <input name="data[price]" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Beschreibung</label>
+                        <textarea name="data[description]" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Laufzeit in Monaten</label>
+                        <input name="data[periodOfValidity]" class="form-control" type="input">
+                    </div> 
+                    <div class="form-group">
+                        <label>Abo verfügbar ab</label>
+                        <input name="data[beginDate]" class="form-control" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Abo verfügbar bis</label>
+                        <input name="data[endDate]" class="form-control" type="date">
+                    </div>
+                    <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Neues Abo</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Neues Abo</h1>
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="module" value="abo">
+                    <input type="hidden" name="controller" value="abo">
+                    <input type="hidden" name="action" value="createOffer">
+                    <div class="form-group">
+                        <label>Firma</label>
+                        <select name="data[companyId]" class="form-control">
+                            {% for company in companies %} 
+                                <option value="{{ company.uid|e }}">{{ company.name|e }}</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Angebot</label>
+                        <select name="data[offerId]" class="form-control">
+                            {% for offer in offers %} 
+                                <option value="{{ offer.uid|e }}">{{ offer.title|e }}, {{ offer.periodOfValidity|e }}, {{ offer.numberOfCities|e }} Städte</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Städte</label>
+                        <select name="data[cities][]" id="cities-select" class="form-control" multiple="multiple">
+                            {% for city in cities %} 
+                                <option value="{{ city.uid|e }}">{{ city.name|e }}</option>                 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Startdatum</label>
+                        <input name="data[beginDate]" class="form-control" type="date">
+                    </div>      
+                    <input class="btn btn-outline-dark"  type="submit" value="Erstellen">
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

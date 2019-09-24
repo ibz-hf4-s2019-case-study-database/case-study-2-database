@@ -25,6 +25,18 @@ class SiteRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractReposi
             ->execute();
     }
 
+    public function findByUid($uid) {
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $result = $queryBuilder
+            ->select('uid', '"cityId"', 'length', 'width')
+            ->from('site')
+            ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid)))
+            ->execute()
+            ->fetch();
+
+        return $this->dynamicModelCreate($result, '\MarkusGehrig\Site\Domain\Model\SiteModel');
+    }
+
     public function findByCityId($cityId) {
         $return = [];
         $queryBuilder = $this->conn->createQueryBuilder();

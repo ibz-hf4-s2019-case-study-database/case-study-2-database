@@ -36,6 +36,7 @@ class Bootstrap {
 
         // Get dispatcher
         $GLOBALS['dispatcher']      = new Dispatcher($GLOBALS['request']);
+        $GLOBALS['configuration']   = include_once('Core/Configuration/configuration.php'); 
 
         return $this;
     }

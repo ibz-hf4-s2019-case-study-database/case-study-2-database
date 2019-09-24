@@ -28,7 +28,7 @@ class DateRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractReposi
         $queryBuilder = $this->conn->createQueryBuilder();
 
         $result = $queryBuilder
-            ->select('uid', 'date', 'cityid')
+            ->select('uid', 'date', '"cityId"')
             ->from('date')
             ->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid)))
             ->execute()
@@ -36,6 +36,25 @@ class DateRepository extends \MarkusGehrig\Core\Domain\Repository\AbstractReposi
 
         
         return $this->dynamicModelCreate($result, '\MarkusGehrig\Site\Domain\Model\DateModel');  
+    }
+
+    public function findByCityId(int $cityId) {
+        $queryBuilder = $this->conn->createQueryBuilder();
+
+        $return = [];
+        $result = $queryBuilder
+            ->select('uid', 'date', '"cityId"')
+            ->from('date')
+            ->where($queryBuilder->expr()->eq('"cityId"', $queryBuilder->createNamedParameter($cityId)))
+            ->execute()
+            ->fetchAll();
+
+        
+        foreach ($result as $value) {
+            $return[] = $this->dynamicModelCreate($value, '\MarkusGehrig\Site\Domain\Model\DateModel');
+        }
+
+        return $return;  
     }
 
     public function createModel($data) {

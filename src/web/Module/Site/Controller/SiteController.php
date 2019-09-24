@@ -126,11 +126,10 @@ class SiteController extends AbstractController {
 
     public function dateAction() {
         $cityId = $this->data['cityId'];
-        $dates = $this->dateRepository->findAll();
+        $dates = $this->dateRepository->findByCityId($cityId);
 
-        $return['cityId'] = $cityId;
         foreach ($dates as $date) {
-            $return['dates'][$date->getUid()]['date'] = $date->getDate();
+            $return[$date->getUid()] = $date->getDate();
         }
 
         return JsonResponse::fromJsonString(json_encode($return));
@@ -160,6 +159,7 @@ class SiteController extends AbstractController {
 
     public function createCityAction() {
         $this->cityRepository->insertRecord($this->cityRepository->createModel($this->getData()));
+        $this->data['cityUid'] = $this->data['cityId'];
         return $this->listAction();
     }
 
@@ -171,6 +171,7 @@ class SiteController extends AbstractController {
 
     public function createDateAction() {;
         $this->dateRepository->insertRecord($this->dateRepository->createModel($this->data));
+        $this->data['cityUid'] = $this->data['cityId'];
         return $this->showAction();
     }
 

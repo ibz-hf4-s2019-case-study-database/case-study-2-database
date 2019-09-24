@@ -1,0 +1,63 @@
+{% extends "backendLayout.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    <title>Abos</title>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Abos</h1>
+                <a href="index.php?module=abo&controller=abo&action=newAbo">Neues Abo</a>
+                <table class="table table-striped table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Firma</th>
+                            <th scope="col">Abo</th>
+                            <th scope="col">Gültig ab</th>
+                            <th scope="col">Gültig bis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for abo in abos %}  
+                            <tr>
+                                <th>{{ abo.uid|e }}</th>
+                                <th>{{ abo.companyName|e }}</th>
+                                <th>{{ abo.offerName|e }}</th>
+                                <th>{{ abo.beginDate|e }}</th>
+                                <th>{{ abo.endDate|e }}</th>
+                            </tr>                   
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+
+                <h1>Abo Angebote</h1>
+                <a href="index.php?module=abo&controller=abo&action=newOffer">Neues Angebot</a>
+                <table class="table table-striped table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Laufzeit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for offer in offers %}  
+                            <tr>
+                                <th>{{ offer.uid|e }}</th>
+                                <td>{{ offer.title|e }}</td>
+                                <td>{{ offer.periodOfValidity|e }} Monate</td>
+                            </tr>                   
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -7,13 +7,7 @@ class AbstractRepository {
 
     public function __construct() {
         $config = new \Doctrine\DBAL\Configuration();
-        $connectionParams = array(
-            'dbname' => 'market',
-            'user' => 'postgres',
-            'password' => 'Weltderwunder',
-            'host' => '172.21.0.3',
-            'driver' => 'pdo_pgsql',
-        );
+        $connectionParams = $GLOBALS['configuration']['db'];
         $this->conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     }
 
@@ -21,7 +15,7 @@ class AbstractRepository {
         $object = new $modelname; 
         foreach ($data as $key => $value) {
             $methode = 'set' . ucfirst($key);
-            if (method_exists($object, $methode)) {          
+            if (method_exists($object, $methode) && $value !== null) {          
                 $object->$methode($value);
             }
         }
