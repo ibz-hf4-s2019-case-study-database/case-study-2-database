@@ -37,6 +37,17 @@ create table site
 
 alter table site owner to postgres;
 
+create table company
+(
+	uid serial not null
+		constraint company_pkey
+			primary key,
+	name varchar,
+	telephone varchar
+);
+
+alter table company owner to postgres;
+
 create table reservation
 (
 	uid serial not null
@@ -51,21 +62,16 @@ create table reservation
 	"siteId" integer not null
 		constraint "reservationSite"
 			references site,
-	"peopleId" integer
+	"companyId" integer
+		constraint "reservationCompany"
+			references company,
+	constraint "reservationConstraint"
+		unique ("cityId", "dateId", "siteId"),
+	constraint "companyConstraint"
+		unique ("cityId", "companyId", "dateId")
 );
 
 alter table reservation owner to postgres;
-
-create table company
-(
-	uid serial not null
-		constraint company_pkey
-			primary key,
-	name varchar,
-	telephone varchar
-);
-
-alter table company owner to postgres;
 
 create table people
 (
@@ -89,3 +95,48 @@ create table people
 
 alter table people owner to postgres;
 
+create table offer
+(
+	uid serial not null
+		constraint offer_pkey
+			primary key,
+	title varchar,
+	description varchar,
+	price double precision not null,
+	"beginDate" date,
+	"endDate" date,
+	"periodOfValidity" varchar,
+	"numberOfCities" integer
+);
+
+alter table offer owner to postgres;
+
+create table abo
+(
+	uid serial not null
+		constraint abo_pkey
+			primary key,
+	"companyId" integer
+		constraint company
+			references company,
+	"offerId" integer
+		constraint offer
+			references offer,
+	"beginDate" date,
+	"endDate" date
+);
+
+alter table abo owner to postgres;
+
+create table "aboCity"
+(
+	uid serial not null,
+	"aboId" integer
+		constraint abo
+			references abo,
+	"cityId" integer
+		constraint city
+			references city
+);
+
+alter table "aboCity" owner to postgres;
