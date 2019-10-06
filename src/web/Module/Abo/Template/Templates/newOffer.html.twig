@@ -2,13 +2,13 @@
 
 {% block head %}
     {{ parent() }}
-    <title>Neue Firma</title>
+    <title>Neues Angebot</title>
 {% endblock %}
 {% block content %}
     <section class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Neue Firma</h1>
+                <h1>Neues Angebot</h1>
                 <form method="GET" action="index.php">
                     <input type="hidden" name="module" value="abo">
                     <input type="hidden" name="controller" value="abo">
@@ -28,7 +28,11 @@
                     <div class="form-group">
                         <label>Laufzeit in Monaten</label>
                         <input name="data[periodOfValidity]" class="form-control" type="input">
-                    </div> 
+                    </div>
+                    <div class="form-group">
+                        <label>Anzahl Städte</label>
+                        <input name="data[numberOfCities]" class="form-control" type="input">
+                    </div>
                     <div class="form-group">
                         <label>Abo verfügbar ab</label>
                         <input name="data[beginDate]" class="form-control" type="date">

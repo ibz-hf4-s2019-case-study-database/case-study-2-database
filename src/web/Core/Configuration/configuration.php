@@ -4,8 +4,8 @@ return [
     'db' => [
         'dbname' => 'market',
         'user' => 'postgres',
-        'password' => 'Weltderwunder',
-        'host' => '172.21.0.2',
+        'password' => 'geheim',
+        'host' => '172.24.0.3',
         'driver' => 'pdo_pgsql'
     ]
 ];

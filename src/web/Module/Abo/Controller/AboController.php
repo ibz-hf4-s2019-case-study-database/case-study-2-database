@@ -79,17 +79,6 @@ class AboController extends AbstractController {
     }
 
     public function createAboAction() {
-        $this->aboRepository->insertRecord($this->aboRepository->createModel($this->getData()));
-        return $this->listAction();
-    }
-
-    public function newOfferAction() {
-        $response = new Response();
-        $response->setContent($this->render("newOffer.html.twig"));
-        return $response;
-    }
-
-    public function createOfferAction() {    
         $offer = $this->offerRepository->findByUid($this->data['offerId']);
 
         if($offer->getNumberOfCities() < count($this->data['cities'])) {
@@ -106,6 +95,17 @@ class AboController extends AbstractController {
             $this->aboCityRepository->insertRecord($this->aboCityRepository->createModel(array('aboId' => $lastInsertedId, 'cityId' => $city)));
         }
 
+        return $this->listAction();
+    }
+
+    public function newOfferAction() {
+        $response = new Response();
+        $response->setContent($this->render("newOffer.html.twig"));
+        return $response;
+    }
+
+    public function createOfferAction() {    
+        $this->offerRepository->insertRecord($this->offerRepository->createModel($this->getData()));
         return $this->listAction();
     }
 }
